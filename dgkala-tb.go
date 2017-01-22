@@ -20,12 +20,18 @@ func checkerr(e error) {
 
 func task() {
 	godotenv.Load()
-	config := oauth1.NewConfig(os.Getenv("CONSUMER_KEY"), os.Getenv("CONSUMER_SECRET"))
+
+        // Initialize go-twitter client
+        config := oauth1.NewConfig(os.Getenv("CONSUMER_KEY"), os.Getenv("CONSUMER_SECRET"))
 	token := oauth1.NewToken(os.Getenv("ACCESS_TOKEN"), os.Getenv("ACCESS_TOKEN_SECRET"))
 	httpClient := config.Client(oauth1.NoContext, token)
 	client := twitter.NewClient(httpClient)
-	offers, err := dgkala.SpecialOffers()
+
+        // Get offers from Digikala
+        offers, err := dgkala.SpecialOffers()
 	checkerr(err)
+
+        // Tweet offers
 	for _, item := range offers {
 		tweetText := item.ProductTitleFa + "\n" + "قیمت: " + strconv.Itoa(int(item.Price)) + "ریال"
 		_, _, err := client.Statuses.Update(tweetText, nil)
@@ -35,6 +41,7 @@ func task() {
 }
 
 func main() {
+        // Cron job for running code everyday
 	s := gocron.NewScheduler()
 	s.Every(1).Days().Do(task)
 	<-s.Start()
