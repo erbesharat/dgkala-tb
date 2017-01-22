@@ -4,12 +4,12 @@ A twitter bot that tweets [Digikala's](http://digikala.com) special offers every
 
 ## Installation
 ```bash
-go get github.com/erbesharat/godpaste
+go get github.com/erbesharat/dgkala-tb
 ```
 
 ## Usage
-1. Change .env folder information with your own API keys.
-2. Run code ``` go run dgkala-tb.go ```
+1. Change .env information with your own API keys.
+2. Run ``` go run dgkala-tb.go ```
 
 ### TODO
 - [ ] Add photo to tweets
